@@ -1,0 +1,40 @@
+name: Daily Stock Check
+
+on:
+  schedule:
+    - cron: "37 00 * * *" # Runs daily at 12:40 AM UTC
+
+jobs:
+  check-stock:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4 python-dotenv
+
+      # Run the script
+      - name: Run stock check script
+        env:
+          url: ${{ secrets.URL }}
+          stockSelector: ${{ secrets.STOCK_SELECTOR }}
+          itemNameSelector: ${{ secrets.ITEM_NAME_SELECTOR }}
+          sizeSelector: ${{ secrets.SIZE_SELECTOR }}
+          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+          FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          LOGIN: ${{ secrets.LOGIN }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+        run: |
+          python check_stock.py

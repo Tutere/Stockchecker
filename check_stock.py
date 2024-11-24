@@ -82,7 +82,7 @@ def main():
     }
 
     # Send email logic
-    if result['message'] != "Item is out of stock":
+    if not result['message'] != "Item is out of stock":
         send_email(**email_details)
     else:
         print("Item out of stock and no issues with request so email not sent.")
