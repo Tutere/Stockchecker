@@ -62,10 +62,10 @@ def send_email(subject, body, to_email, from_email, smtp_server, smtp_port, logi
 
 # # Main function
 def main():
-    url = f"{os.getenv('url')}"
-    stockSelector = f"{os.getenv('stockSelector')}"
-    itemNameSelector = f"{os.getenv('itemNameSelector')}"
-    sizeSelector = f"{os.getenv('sizeSelector')}"
+    url = f"{os.getenv('URL')}"
+    stockSelector = f"{os.getenv('STOCK_SELECTOR')}"
+    itemNameSelector = f"{os.getenv('ITEM_NAME_SELECTOR')}"
+    sizeSelector = f"{os.getenv('SIZE_SELECTOR')}"
     
 
     # Check stock and set email fields
@@ -82,7 +82,7 @@ def main():
     }
 
     # Send email logic
-    if not result['message'] != "Item is out of stock":
+    if result['message'] != "Item is out of stock":
         send_email(**email_details)
     else:
         print("Item out of stock and no issues with request so email not sent.")
